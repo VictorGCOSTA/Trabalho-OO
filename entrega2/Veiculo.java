@@ -7,7 +7,27 @@ public class Veiculo {
     private boolean evento;
     private double valorPago;
 
+    @Override
+    public String toString() {
+        return "{" +
+            " placa='" + getPlaca() + "'" +
+            ", horarioEntrada='" + getHorarioEntrada() + "'" +
+            ", horarioSaida='" + getHorarioSaida() + "'" +
+            ", dataSaida='" + getDataSaida() + "'" +
+            ", dataEntrada='" + getDataEntrada() + "'" +
+            ", evento='" + isEvento() + "'" +
+            ", valorPago='" + getValorPago() + "'" +
+            "}";
+    }
 
+
+
+    public Veiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento) {
+        this.placa = placa;
+        this.horarioEntrada = horarioEntrada;
+        this.dataEntrada = dataEntrada;
+        this.evento = evento;
+    }
 
     public String getPlaca() {
         return this.placa;

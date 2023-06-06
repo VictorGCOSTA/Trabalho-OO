@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+
 public class Estacionamento {
+    private String nome;
     private int vagasOcupadas;
     private int vagasTotais;
     private double porcentagemContratante;
@@ -11,17 +14,29 @@ public class Estacionamento {
     private double valorNoturna;
     private double valorMensalista;
     private double valorEvento;
+    private ArrayList<Veiculo> veiculos = new ArrayList<>(); 
 
     public int calcularValorASerPago(){
-
+        return 0;
     }
 
     public int verificaVagasDisponiveis(){
-
+        return this.vagasTotais-this.vagasOcupadas;
     }
 
-    public void incluirVeiculo(){
+    public boolean incluirVeiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento){
+        Veiculo v = new Veiculo(placa, horarioEntrada, dataEntrada, evento);
 
+        if(this.vagasTotais == this.vagasOcupadas){
+            return false;
+        }
+        for(Veiculo veiculo:veiculos){
+            if (veiculo.getPlaca() == v.getPlaca()){
+                return false;
+            }
+        }
+        veiculos.add(v);
+        return true;
     }
 
     public void retirarVeiculo(){
@@ -29,9 +44,13 @@ public class Estacionamento {
     }
 
     public double calcularRetornoContratante(){
-
+        return this.lucro*this.porcentagemContratante;
     }
-
+    public void verVeiculos(){
+        for(Veiculo v : veiculos){
+            System.out.println(v);
+        }
+    }
     public int getVagasTotais() {
         return this.vagasTotais;
     }
@@ -125,6 +144,29 @@ public class Estacionamento {
     }
 
     public void setValorEvento(double valorEvento) {
+        this.valorEvento = valorEvento;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+
+    public Estacionamento(String nome, int vagasTotais, double porcentagemContratante, String horarioFuncionamento, String horarioPeriodoNoturno, double valorFracao, double valorHora, double valorDiurna, double valorNoturna, double valorMensalista, double valorEvento) {
+        this.nome = nome;
+        this.vagasTotais = vagasTotais;
+        this.porcentagemContratante = porcentagemContratante;
+        this.horarioFuncionamento = horarioFuncionamento;
+        this.horarioPeriodoNoturno = horarioPeriodoNoturno;
+        this.valorFracao = valorFracao;
+        this.valorHora = valorHora;
+        this.valorDiurna = valorDiurna;
+        this.valorNoturna = valorNoturna;
+        this.valorMensalista = valorMensalista;
         this.valorEvento = valorEvento;
     }
 }
