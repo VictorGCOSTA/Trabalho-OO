@@ -14,24 +14,24 @@ public class Estacionamento {
     private double valorNoturna;
     private double valorMensalista;
     private double valorEvento;
-    private ArrayList<Veiculo> veiculos = new ArrayList<>(); 
+    private ArrayList<Veiculo> veiculos = new ArrayList<>();
 
-    public int calcularValorASerPago(){
+    public int calcularValorASerPago() {
         return 0;
     }
 
-    public int verificaVagasDisponiveis(){
-        return this.vagasTotais-this.vagasOcupadas;
+    public int verificaVagasDisponiveis() {
+        return this.vagasTotais - this.vagasOcupadas;
     }
 
-    public boolean incluirVeiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento){
+    public boolean incluirVeiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento) {
         Veiculo v = new Veiculo(placa, horarioEntrada, dataEntrada, evento);
 
-        if(this.vagasTotais == this.vagasOcupadas){
+        if (this.vagasTotais == this.vagasOcupadas) {
             return false;
         }
-        for(Veiculo veiculo:veiculos){
-            if (veiculo.getPlaca() == v.getPlaca()){
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getPlaca() == v.getPlaca()) {
                 return false;
             }
         }
@@ -39,18 +39,20 @@ public class Estacionamento {
         return true;
     }
 
-    public void retirarVeiculo(){
+    public void retirarVeiculo() {
 
     }
 
-    public double calcularRetornoContratante(){
-        return this.lucro*this.porcentagemContratante;
+    public double calcularRetornoContratante() {
+        return this.lucro * this.porcentagemContratante;
     }
-    public void verVeiculos(){
-        for(Veiculo v : veiculos){
+
+    public void verVeiculos() {
+        for (Veiculo v : veiculos) {
             System.out.println(v);
         }
     }
+
     public int getVagasTotais() {
         return this.vagasTotais;
     }
@@ -154,9 +156,10 @@ public class Estacionamento {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
 
-    public Estacionamento(String nome, int vagasTotais, double porcentagemContratante, String hrFuncio, String hrNoturno, double valorFracao, double valorHora, double valorDiurna, double valorNoturna, double valorMensalista, double valorEvento) {
+    public Estacionamento(String nome, int vagasTotais, double porcentagemContratante, String hrFuncio,
+            String hrNoturno, double valorFracao, double valorHora, double valorDiurna, double valorNoturna,
+            double valorMensalista, double valorEvento) {
         this.nome = nome;
         this.vagasTotais = vagasTotais;
         this.porcentagemContratante = porcentagemContratante;
@@ -168,5 +171,9 @@ public class Estacionamento {
         this.valorNoturna = valorNoturna;
         this.valorMensalista = valorMensalista;
         this.valorEvento = valorEvento;
+    }
+
+    public ArrayList<Veiculo> getVeiculos() {
+        return veiculos;
     }
 }
