@@ -156,12 +156,12 @@ public class Estacionamento {
     }
     
 
-    public Estacionamento(String nome, int vagasTotais, double porcentagemContratante, String horarioFuncionamento, String horarioPeriodoNoturno, double valorFracao, double valorHora, double valorDiurna, double valorNoturna, double valorMensalista, double valorEvento) {
+    public Estacionamento(String nome, int vagasTotais, double porcentagemContratante, String hrFuncio, String hrNoturno, double valorFracao, double valorHora, double valorDiurna, double valorNoturna, double valorMensalista, double valorEvento) {
         this.nome = nome;
         this.vagasTotais = vagasTotais;
         this.porcentagemContratante = porcentagemContratante;
-        this.horarioFuncionamento = horarioFuncionamento;
-        this.horarioPeriodoNoturno = horarioPeriodoNoturno;
+        this.horarioFuncionamento = hrFuncio;
+        this.horarioPeriodoNoturno = hrNoturno;
         this.valorFracao = valorFracao;
         this.valorHora = valorHora;
         this.valorDiurna = valorDiurna;

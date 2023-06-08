@@ -23,41 +23,66 @@ public class Interface {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Digite o nome do estacionament");
+                    System.out.println("Digite o nome do estacionamento");
                     nomeEstacionamento = scanner.next();
                     System.out.println("Digite a quantidade de vagas totais:");
-                    Int vagasTotais = scanner.nextInt();
-                    System.out.println("Digite a porcentagem do contrante:");
+                    int vagasTotais = scanner.nextInt();
+                    System.out.println("Digite a porcentagem do contratante:");
+                    double porcentagemContratante = scanner.nextDouble();
                     System.out.println("Digite o horario de funcionamento:");
+                    String horarioFuncionamento = scanner.next();
                     System.out.println("Digite o horario de periodo noturno: ");
+                    String horarioPeriodoNoturno = scanner.next();
                     System.out.println("Digite o valor da fracao:");
+                    double valorFracao = scanner.nextDouble();
                     System.out.println("Digite o valor por hora:");
+                    double valorHora = scanner.nextDouble();
                     System.out.println("Digite o valor da diurna:");
-                    System.out.println("Digite o valor da naturna:");
+                    double valorDiurna = scanner.nextDouble();
+                    System.out.println("Digite o valor da noturna:");
+                    double valorNoturna = scanner.nextDouble();
                     System.out.println("Digite o valor mensalista:");
+                    double valorMensalista = scanner.nextDouble();
                     System.out.println("Digite o valor evento:");
+                    double valorEvento = scanner.nextDouble();
 
+                    Estacionamento estaci = new Estacionamento(nomeEstacionamento, vagasTotais,
+                            porcentagemContratante, horarioFuncionamento, horarioPeriodoNoturno,
+                            valorFracao, valorHora, valorDiurna, valorNoturna, valorMensalista, valorEvento);
+                    estacionamentos.add(estaci);
+                    System.out.println("Estacionamento criado com sucesso!");
+                    break;
                 case 2:
                     System.out.println("Digite o nome do estacionamento em que deseja incluir");
                     nomeEstacionamento = scanner.next();
-                    Estacionamento e;
+                    Estacionamento estacionamentoEncontrado = null;
                     for (Estacionamento estacionamento : estacionamentos) {
                         if (estacionamento.getNome().equals(nomeEstacionamento)) {
-                            e = estacionamento;
-                            System.out.println("Digite a placa do veículo");
-                            String placa = scanner.next();
-                            System.out.println("Digite o horario de entrada");
-                            String horarioEntrada = scanner.next();
-                            System.out.println("Digite a data de entrada");
-                            String dataEntrada = scanner.next();
-                            System.out.println("O veículo está em um evento?");
-                            System.out.println("Digite 's' para sim e 'n' para não");
-                            boolean evento = scanner.next().equals("s") ? true : false;
-                            e.incluirVeiculo(placa, horarioEntrada, dataEntrada, evento);
-                            e.verVeiculos();
+                            estacionamentoEncontrado = estacionamento;
+                            break;
                         }
                     }
-
+                    if (estacionamentoEncontrado != null) {
+                        System.out.println("Digite a placa do veículo");
+                        String placa = scanner.next();
+                        System.out.println("Digite o horario de entrada");
+                        String horarioEntrada = scanner.next();
+                        System.out.println("Digite a data de entrada");
+                        String dataEntrada = scanner.next();
+                        System.out.println("O veículo está em um evento?");
+                        System.out.println("Digite 's' para sim e 'n' para não");
+                        boolean evento = scanner.next().equals("s");
+                        boolean veiculoIncluido = estacionamentoEncontrado.incluirVeiculo(placa, horarioEntrada,
+                                dataEntrada, evento);
+                        if (veiculoIncluido) {
+                            System.out.println("Veículo incluído com sucesso!");
+                        } else {
+                            System.out.println("Não foi possível incluir o veículo.");
+                        }
+                        estacionamentoEncontrado.verVeiculos();
+                    } else {
+                        System.out.println("Estacionamento não encontrado.");
+                    }
                     break;
                 case 3:
 
