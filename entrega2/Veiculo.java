@@ -4,7 +4,7 @@ public class Veiculo {
     private String horarioSaida;
     private String dataSaida;
     private String dataEntrada;
-    private boolean evento;
+    private String nomeEvento;
     private double valorPago;
 
     @Override
@@ -15,18 +15,29 @@ public class Veiculo {
             ", horarioSaida='" + getHorarioSaida() + "'" +
             ", dataSaida='" + getDataSaida() + "'" +
             ", dataEntrada='" + getDataEntrada() + "'" +
-            ", evento='" + isEvento() + "'" +
+            ", evento='" + getEvento() + "'" +
             ", valorPago='" + getValorPago() + "'" +
             "}";
     }
 
 
 
-    public Veiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento) {
+    public Veiculo(String placa, String horarioEntrada, String horarioSaida, String dataEntrada, String dataSaida, String nomeEvento) {
         this.placa = placa;
         this.horarioEntrada = horarioEntrada;
+        this.horarioSaida = horarioSaida;
         this.dataEntrada = dataEntrada;
-        this.evento = evento;
+        this.dataSaida = dataSaida;
+        this.nomeEvento = nomeEvento;
+    }
+
+    public Veiculo(String placa, String horarioEntrada, String horarioSaida, String dataEntrada, String dataSaida) {
+        this.placa = placa;
+        this.horarioEntrada = horarioEntrada;
+        this.horarioSaida = horarioSaida;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+        this.nomeEvento = null;
     }
 
     public String getPlaca() {
@@ -69,16 +80,12 @@ public class Veiculo {
         this.dataEntrada = dataEntrada;
     }
 
-    public boolean isEvento() {
-        return this.evento;
+    public String getEvento() {
+        return this.nomeEvento;
     }
 
-    public boolean getEvento() {
-        return this.evento;
-    }
-
-    public void setEvento(boolean evento) {
-        this.evento = evento;
+    public void setEvento(String nomeEvento) {
+        this.nomeEvento = nomeEvento;
     }
 
     public double getValorPago() {

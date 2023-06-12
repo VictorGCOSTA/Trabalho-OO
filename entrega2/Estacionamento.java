@@ -24,10 +24,10 @@ public class Estacionamento {
         return this.vagasTotais - this.vagasOcupadas;
     }
 
-    public boolean incluirVeiculo(String placa, String horarioEntrada, String dataEntrada, boolean evento) {
-        Veiculo v = new Veiculo(placa, horarioEntrada, dataEntrada, evento);
+    public boolean incluirVeiculo(String placa, String horarioEntrada, String horarioSaida, String dataEntrada, String dataSaida, String evento) {
+        Veiculo v = new Veiculo(placa, horarioEntrada, horarioSaida, dataEntrada, dataSaida, evento);
 
-        if (this.vagasTotais == this.vagasOcupadas) {
+        if (this.vagasTotais <= this.vagasOcupadas) {
             return false;
         }
         for (Veiculo veiculo : veiculos) {
@@ -36,11 +36,12 @@ public class Estacionamento {
             }
         }
         veiculos.add(v);
+        this.vagasOcupadas++;
         return true;
     }
 
     public void retirarVeiculo() {
-
+    	this.vagasOcupadas--;
     }
 
     public double calcularRetornoContratante() {
