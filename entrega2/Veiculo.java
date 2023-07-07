@@ -1,3 +1,5 @@
+import Acessos.Acesso;
+
 public class Veiculo {
     private String placa;
     private String horarioEntrada;
@@ -6,6 +8,7 @@ public class Veiculo {
     private String dataEntrada;
     private String nomeEvento;
     private double valorPago;
+    private Acesso acesso;
 
     @Override
     public String toString() {

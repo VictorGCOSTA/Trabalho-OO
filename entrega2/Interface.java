@@ -1,3 +1,4 @@
+
 // TODO: Calcular valor a pagar ao invés de só escrever com set.
 // TODO: Se o usuário errar o nome do evento em inserirVeiculo() ou atualizarVeiculo(), ele pode ficar "preso" sem conseguir sair do loop.
 // TODO: Talvez seja interessante mostrar o estacionamento do veículo quando for procurado.
@@ -7,28 +8,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Acessos.Acesso;
+import Acessos.AcessoEvento;
+import Acessos.AcessoFracao;
+import Acessos.AcessoHora;
+import Acessos.AcessoMensalista;
 import Excecoes.DescricaoEmBrancoException;
 import Excecoes.ValorAcessoInvalidoException;
 
 public class Interface {
-	private static List<Estacionamento> estacionamentos = new ArrayList<>();
+    private static List<Estacionamento> estacionamentos = new ArrayList<>();
     private static List<Evento> eventos = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String args[]) {
         boolean continuar = true;
-        while (continuar){
-            try{
+        while (continuar) {
+            try {
                 continuar = Menu();
-            } catch (DescricaoEmBrancoException e){
+            } catch (DescricaoEmBrancoException e) {
                 System.out.println(e.getMessage());
-            } catch (ValorAcessoInvalidoException e){
+            } catch (ValorAcessoInvalidoException e) {
                 System.out.println(e.getMessage());
             }
         }
         scanner.close();
     }
 
-    private static boolean Menu() throws DescricaoEmBrancoException, ValorAcessoInvalidoException{
+    private static boolean Menu() throws DescricaoEmBrancoException, ValorAcessoInvalidoException {
         int opcao;
         System.out.println("Selecione uma opção:");
         System.out.println("-- INSERIR --");
@@ -45,7 +52,7 @@ public class Interface {
 
         System.out.println("-- ATUALIZAR --");
         System.out.println("7 - Atualizar estacionamento");
-        System.out.println("8 - Atualizar veiculo");        
+        System.out.println("8 - Atualizar veiculo");
         System.out.println("9 - Atualizar evento");
         System.out.println();
 
@@ -74,7 +81,7 @@ public class Interface {
             case 4:
                 pesquisarEstacionamento();
                 break;
-            case 5: 
+            case 5:
                 pesquisarVeiculo();
                 break;
             case 6:
@@ -108,12 +115,13 @@ public class Interface {
                 break;
         }
         return true;
-}
-/*********************
-        Adições
- 
-*********************/
-    private static void inserirEstacionamento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException{
+    }
+
+    /*********************
+     * Adições
+     * 
+     *********************/
+    private static void inserirEstacionamento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException {
         System.out.println("Digite o nome do estacionamento");
         String nomeEstacionamento = lerStringValida();
         System.out.println("Digite a quantidade de vagas totais:");
@@ -138,18 +146,18 @@ public class Interface {
         double valorEvento = lerDoubleValido();
 
         Estacionamento estacionamento = new Estacionamento(nomeEstacionamento, vagasTotais,
-        porcentagemContratante, horarioFuncionamento, horarioPeriodoNoturno,
-        valorFracao, valorHora, valorDiurna, valorNoturna, valorMensalista, valorEvento);
+                porcentagemContratante, horarioFuncionamento, horarioPeriodoNoturno,
+                valorFracao, valorHora, valorDiurna, valorNoturna, valorMensalista, valorEvento);
 
         estacionamentos.add(estacionamento);
         System.out.println("Estacionamento criado com sucesso!");
     }
 
-    private static void inserirVeiculo() throws DescricaoEmBrancoException{
+    private static void inserirVeiculo() throws DescricaoEmBrancoException {
         System.out.println("Digite o nome do estacionamento em que deseja incluir");
         String nomeEstacionamento = lerStringValida();
         Estacionamento estacionamentoEncontrado = encontrarEstacionamento(nomeEstacionamento);
-        
+
         if (estacionamentoEncontrado != null) {
             System.out.println("Digite a placa do veículo");
             String placa = lerStringValida();
@@ -165,15 +173,15 @@ public class Interface {
             System.out.println("Digite 's' para sim e 'n' para não");
             String evento = null;
             String resposta = lerStringValida();
-            if (resposta.equals("s") || resposta.equals("S")){
+            if (resposta.equals("s") || resposta.equals("S")) {
                 System.out.println("Digite o nome do evento");
                 boolean novoEventoValido = false;
-                while (!novoEventoValido){
+                while (!novoEventoValido) {
                     evento = lerStringValida();
                     novoEventoValido = eventoExiste(evento);
-                        if (!novoEventoValido){
-                            System.out.println("Evento não encontrado. Insira um evento válido.");
-                        }
+                    if (!novoEventoValido) {
+                        System.out.println("Evento não encontrado. Insira um evento válido.");
+                    }
                 }
             }
 
@@ -189,7 +197,7 @@ public class Interface {
         }
     }
 
-    private static void inserirEvento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException{
+    private static void inserirEvento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException {
         System.out.println("Digite o nome do evento");
         String nomeEvento = lerStringValida();
         System.out.println("Digite a data de início do evento");
@@ -203,17 +211,18 @@ public class Interface {
         System.out.println("Digite o valor do evento");
         double valorEvento = lerDoubleValido();
 
-        Evento evento = new Evento(nomeEvento, dataInicioEvento, dataFimEvento, horarioInicioEvento, horarioFimEvento, valorEvento);
-        
+        Evento evento = new Evento(nomeEvento, dataInicioEvento, dataFimEvento, horarioInicioEvento, horarioFimEvento,
+                valorEvento);
+
         eventos.add(evento);
         System.out.println("Evento incluído com sucesso!");
     }
 
-/*********************
-        Pesquisas
- 
-*********************/
-    private static void pesquisarEstacionamento() throws DescricaoEmBrancoException{
+    /*********************
+     * Pesquisas
+     * 
+     *********************/
+    private static void pesquisarEstacionamento() throws DescricaoEmBrancoException {
         System.out.println("Digite o nome do estacionamento que deseja pesquisar:");
         String nomeEstacionamento = lerStringValida();
         Estacionamento estacionamentoEncontradoLeitura = encontrarEstacionamento(nomeEstacionamento);
@@ -245,20 +254,19 @@ public class Interface {
         }
     }
 
-    private static void pesquisarVeiculo() throws DescricaoEmBrancoException{
+    private static void pesquisarVeiculo() throws DescricaoEmBrancoException {
         System.out.println("Digite a placa do veículo que deseja procurar:");
         String placaVeiculo = lerStringValida();
         Veiculo veiculoEncontrado = encontrarVeiculo(placaVeiculo);
-        if (veiculoEncontrado==null) {
+        if (veiculoEncontrado == null) {
             System.out.println("Veículo não encontrado.");
-        }
-        else {
+        } else {
             System.out.println("Placa: " + veiculoEncontrado.getPlaca());
             System.out.println("Horário de entrada: " + veiculoEncontrado.getHorarioEntrada());
             System.out.println("Data de entrada: " + veiculoEncontrado.getDataEntrada());
             System.out.println("Horário de saída: " + veiculoEncontrado.getHorarioSaida());
             System.out.println("Data de saída: " + veiculoEncontrado.getDataSaida());
-            if (veiculoEncontrado.getEvento() == null){
+            if (veiculoEncontrado.getEvento() == null) {
                 System.out.println("Evento: Não está em um evento.");
             } else {
                 System.out.println("Evento: " + veiculoEncontrado.getEvento());
@@ -266,14 +274,13 @@ public class Interface {
         }
     }
 
-    private static void pesquisarEvento() throws DescricaoEmBrancoException{
+    private static void pesquisarEvento() throws DescricaoEmBrancoException {
         System.out.println("Digite o nome do evento que deseja pesquisar:");
         String nomeEvento = lerStringValida();
         Evento eventoEncontrado = encontrarEvento(nomeEvento);
-        if (eventoEncontrado==null) {
+        if (eventoEncontrado == null) {
             System.out.println("Evento não encontrado.");
-        }
-        else {
+        } else {
             System.out.println("Nome: " + eventoEncontrado.getNome());
             System.out.println("Data de início: " + eventoEncontrado.getDataInicio());
             System.out.println("Data de fim: " + eventoEncontrado.getDataFim());
@@ -282,11 +289,12 @@ public class Interface {
             System.out.println("Valor: " + eventoEncontrado.getValor());
         }
     }
-/*********************
-        Atualizações
 
-*********************/
-    private static void atualizarEstacionamento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException{
+    /*********************
+     * Atualizações
+     * 
+     *********************/
+    private static void atualizarEstacionamento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException {
         System.out.println("Digite o nome do estacionamento que deseja atualizar os registros:");
         String nomeEstacionamento = lerStringValida();
         Estacionamento estacionamentoEncontradoAtualizacao = encontrarEstacionamento(nomeEstacionamento);
@@ -294,10 +302,10 @@ public class Interface {
             String editarNome, editarVagasTotais, editarPorcentagemContratante, editarHorarioFuncionamento,
                     editarHorarioPeriodoNoturno, editarValorFracao, editarValorHora, editarValorDiurna,
                     editarValorNoturna, editarValorMensalista, editarValorEvento;
-            
+
             System.out.println("Deseja editar o nome do estacionamento? (s/n)");
             editarNome = lerStringValida();
-            if (editarNome.equals("s") || editarNome.equals("S")){
+            if (editarNome.equals("s") || editarNome.equals("S")) {
                 System.out.println("Digite o novo nome do estacionamento");
                 String novoNomeEstacionamento = lerStringValida();
                 estacionamentoEncontradoAtualizacao.setNome(novoNomeEstacionamento);
@@ -305,7 +313,7 @@ public class Interface {
             }
             System.out.println("Deseja editar a quantidade de vagas totais? (s/n)");
             editarVagasTotais = lerStringValida();
-            if (editarVagasTotais.equals("s") || editarVagasTotais.equals("S")){
+            if (editarVagasTotais.equals("s") || editarVagasTotais.equals("S")) {
                 System.out.println("Digite a nova quantidade de vagas totais");
                 int novaVagasTotais = lerInteiroValido();
                 estacionamentoEncontradoAtualizacao.setVagasTotais(novaVagasTotais);
@@ -313,7 +321,7 @@ public class Interface {
             }
             System.out.println("Deseja editar a porcentagem contratante? (s/n)");
             editarPorcentagemContratante = lerStringValida();
-            if (editarPorcentagemContratante.equals("s") || editarPorcentagemContratante.equals("S")){
+            if (editarPorcentagemContratante.equals("s") || editarPorcentagemContratante.equals("S")) {
                 System.out.println("Digite a nova porcentagem contratante");
                 double novaPorcentagemContratante = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setPorcentagemContratante(novaPorcentagemContratante);
@@ -321,7 +329,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o horário de funcionamento? (s/n)");
             editarHorarioFuncionamento = lerStringValida();
-            if (editarHorarioFuncionamento.equals("s") || editarHorarioFuncionamento.equals("S")){
+            if (editarHorarioFuncionamento.equals("s") || editarHorarioFuncionamento.equals("S")) {
                 System.out.println("Digite o novo horário de funcionamento");
                 String novoHorarioFuncionamento = lerStringValida();
                 estacionamentoEncontradoAtualizacao.setHorarioFuncionamento(novoHorarioFuncionamento);
@@ -329,7 +337,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o horário do período noturno? (s/n)");
             editarHorarioPeriodoNoturno = lerStringValida();
-            if (editarHorarioPeriodoNoturno.equals("s") || editarHorarioPeriodoNoturno.equals("S")){
+            if (editarHorarioPeriodoNoturno.equals("s") || editarHorarioPeriodoNoturno.equals("S")) {
                 System.out.println("Digite o novo horário do período noturno");
                 String novoHorarioPeriodoNoturno = lerStringValida();
                 estacionamentoEncontradoAtualizacao.setHorarioPeriodoNoturno(novoHorarioPeriodoNoturno);
@@ -337,7 +345,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor da fração? (s/n)");
             editarValorFracao = lerStringValida();
-            if (editarValorFracao.equals("s") || editarValorFracao.equals("S")){
+            if (editarValorFracao.equals("s") || editarValorFracao.equals("S")) {
                 System.out.println("Digite o novo valor da fração");
                 double novoValorFracao = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorFracao(novoValorFracao);
@@ -345,7 +353,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor da hora? (s/n)");
             editarValorHora = lerStringValida();
-            if (editarValorHora.equals("s") || editarValorHora.equals("S")){
+            if (editarValorHora.equals("s") || editarValorHora.equals("S")) {
                 System.out.println("Digite o novo valor da hora");
                 double novoValorHora = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorHora(novoValorHora);
@@ -353,7 +361,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor da diurna? (s/n)");
             editarValorDiurna = lerStringValida();
-            if (editarValorDiurna.equals("s") || editarValorDiurna.equals("S")){
+            if (editarValorDiurna.equals("s") || editarValorDiurna.equals("S")) {
                 System.out.println("Digite o novo valor da diurna");
                 double novoValorDiurna = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorDiurna(novoValorDiurna);
@@ -361,7 +369,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor da noturna? (s/n)");
             editarValorNoturna = lerStringValida();
-            if (editarValorNoturna.equals("s") || editarValorNoturna.equals("S")){
+            if (editarValorNoturna.equals("s") || editarValorNoturna.equals("S")) {
                 System.out.println("Digite o novo valor da noturna");
                 double novoValorNoturna = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorNoturna(novoValorNoturna);
@@ -369,7 +377,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor do mensalista? (s/n)");
             editarValorMensalista = lerStringValida();
-            if (editarValorMensalista.equals("s") || editarValorMensalista.equals("S")){
+            if (editarValorMensalista.equals("s") || editarValorMensalista.equals("S")) {
                 System.out.println("Digite o novo valor do mensalista");
                 double novoValorMensalista = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorMensalista(novoValorMensalista);
@@ -377,77 +385,76 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor do evento? (s/n)");
             editarValorEvento = lerStringValida();
-            if (editarValorEvento.equals("s") || editarValorEvento.equals("S")){
+            if (editarValorEvento.equals("s") || editarValorEvento.equals("S")) {
                 System.out.println("Digite o novo valor do evento");
                 double novoValorEvento = lerDoubleValido();
                 estacionamentoEncontradoAtualizacao.setValorEvento(novoValorEvento);
                 System.out.println("Valor do evento atualizado com sucesso!");
-            }   
+            }
         } else {
             System.out.println("Estacionamento não encontrado.");
         }
     }
 
-    private static void atualizarVeiculo() throws DescricaoEmBrancoException{
+    private static void atualizarVeiculo() throws DescricaoEmBrancoException {
         System.out.println("Digite a placa do veículo que deseja atualizar");
         String placaVeiculo = lerStringValida();
         Veiculo veiculoEncontradoAtualizacao = encontrarVeiculo(placaVeiculo);
         if (veiculoEncontradoAtualizacao != null) {
             String editarPlaca, editarHorarioEntrada, editarHorarioSaida,
-            editarDataEntrada, editarDataSaida, editarNomeEvento;
+                    editarDataEntrada, editarDataSaida, editarNomeEvento;
             System.out.println("Deseja editar a placa do veículo? (s/n)");
             editarPlaca = lerStringValida();
-        	if(editarPlaca.equals("s") || editarPlaca.equals("S")) {
-        		 System.out.println("Digite o nova Placa");
-                 String novaPlaca = lerStringValida();
-                 veiculoEncontradoAtualizacao.setPlaca(novaPlaca);
-                 System.out.println("Placa atualizada com sucesso!");
-        	}
-        	System.out.println("Deseja editar o horario de entrada do veículo? (s/n)");
+            if (editarPlaca.equals("s") || editarPlaca.equals("S")) {
+                System.out.println("Digite o nova Placa");
+                String novaPlaca = lerStringValida();
+                veiculoEncontradoAtualizacao.setPlaca(novaPlaca);
+                System.out.println("Placa atualizada com sucesso!");
+            }
+            System.out.println("Deseja editar o horario de entrada do veículo? (s/n)");
             editarHorarioEntrada = lerStringValida();
-            if(editarHorarioEntrada.equals("s") || editarHorarioEntrada.equals("S")) {
-            	System.out.println("Digite o novo horario de entrada do veículo");
+            if (editarHorarioEntrada.equals("s") || editarHorarioEntrada.equals("S")) {
+                System.out.println("Digite o novo horario de entrada do veículo");
                 String novoHorarioEntrada = lerStringValida();
                 veiculoEncontradoAtualizacao.setHorarioEntrada(novoHorarioEntrada);
                 System.out.println("Horario de entrada atualizado com sucesso!");
             }
             System.out.println("Deseja editar o horario de saída do veículo? (s/n)");
             editarHorarioSaida = lerStringValida();
-            if(editarHorarioSaida.equals("s") || editarHorarioSaida.equals("S")) {
-       		 	System.out.println("Digite o novo horario de saída do veículo");
+            if (editarHorarioSaida.equals("s") || editarHorarioSaida.equals("S")) {
+                System.out.println("Digite o novo horario de saída do veículo");
                 String novoHorarioSaida = lerStringValida();
                 veiculoEncontradoAtualizacao.setHorarioEntrada(novoHorarioSaida);
                 System.out.println("Horario de saída atualizado com sucesso!");
             }
             System.out.println("Deseja editar a data de entrada do veículo? (s/n)");
             editarDataEntrada = lerStringValida();
-            if(editarDataEntrada.equals("s") || editarDataEntrada.equals("S")) {
-            	System.out.println("Digite a nova data de entrada do veículo");
+            if (editarDataEntrada.equals("s") || editarDataEntrada.equals("S")) {
+                System.out.println("Digite a nova data de entrada do veículo");
                 String novoDataEntrada = lerStringValida();
                 veiculoEncontradoAtualizacao.setDataEntrada(novoDataEntrada);
                 System.out.println("Data de entrada atualizada com sucesso!");
             }
             System.out.println("Deseja editar a data de saída do veículo? (s/n)");
             editarDataSaida = lerStringValida();
-            if(editarDataSaida.equals("s") || editarDataSaida.equals("S")) {
-       		 	System.out.println("Digite a nova data de saída do veículo");
+            if (editarDataSaida.equals("s") || editarDataSaida.equals("S")) {
+                System.out.println("Digite a nova data de saída do veículo");
                 String novoDataSaida = lerStringValida();
                 veiculoEncontradoAtualizacao.setHorarioEntrada(novoDataSaida);
                 System.out.println("Data de saída atualizado com sucesso!");
             }
             System.out.println("Deseja editar o evento do veículo? (s/n)");
             editarNomeEvento = lerStringValida();
-            if(editarNomeEvento.equals("s") || editarNomeEvento.equals("S")) {
+            if (editarNomeEvento.equals("s") || editarNomeEvento.equals("S")) {
                 boolean novoEventoValido = false;
-       		 	while (!novoEventoValido) {
+                while (!novoEventoValido) {
                     System.out.println("Digite o novo evento do veículo");
                     String novoEvento = lerStringValida();
                     novoEventoValido = eventoExiste(novoEvento);
-                    if (!novoEventoValido){
+                    if (!novoEventoValido) {
                         System.out.println("Evento não encontrado. Insira um evento válido.");
-                    }
-                    else {
-                        veiculoEncontradoAtualizacao.setEvento(novoEvento);                 
+                    } else {
+                        veiculoEncontradoAtualizacao.setEvento(novoEvento);
                         System.out.println("Evento atualizado com sucesso!");
                     }
                 }
@@ -457,7 +464,7 @@ public class Interface {
         }
     }
 
-    private static void atualizarEvento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException{
+    private static void atualizarEvento() throws DescricaoEmBrancoException, ValorAcessoInvalidoException {
         System.out.println("Digite o nome do evento que deseja atualizar");
         String nomeEvento = lerStringValida();
         Evento eventoEncontradoAtualizacao = encontrarEvento(nomeEvento);
@@ -465,7 +472,7 @@ public class Interface {
             String editarNome, editarDataInicio, editarDataFim, editarHorarioInicio, editarHorarioFim, editarValor;
             System.out.println("Deseja editar o nome do evento? (s/n)");
             editarNome = lerStringValida();
-            if(editarNome.equals("s") || editarNome.equals("S")) {
+            if (editarNome.equals("s") || editarNome.equals("S")) {
                 System.out.println("Digite o novo nome do evento");
                 String novoNome = lerStringValida();
                 eventoEncontradoAtualizacao.setNome(novoNome);
@@ -473,7 +480,7 @@ public class Interface {
             }
             System.out.println("Deseja editar a data de início  do evento? (s/n)");
             editarDataInicio = lerStringValida();
-            if(editarDataInicio.equals("s") || editarDataInicio.equals("S")) {
+            if (editarDataInicio.equals("s") || editarDataInicio.equals("S")) {
                 System.out.println("Digite a nova data de início  do evento");
                 String novaData = lerStringValida();
                 eventoEncontradoAtualizacao.setDataInicio(novaData);
@@ -481,7 +488,7 @@ public class Interface {
             }
             System.out.println("Deseja editar a data de fim do evento? (s/n)");
             editarDataFim = lerStringValida();
-            if(editarDataFim.equals("s") || editarDataFim.equals("S")) {
+            if (editarDataFim.equals("s") || editarDataFim.equals("S")) {
                 System.out.println("Digite a nova data de fim do evento");
                 String novaData = lerStringValida();
                 eventoEncontradoAtualizacao.setDataFim(novaData);
@@ -489,7 +496,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o horario de início do evento? (s/n)");
             editarHorarioInicio = lerStringValida();
-            if(editarHorarioInicio.equals("s") || editarHorarioInicio.equals("S")) {
+            if (editarHorarioInicio.equals("s") || editarHorarioInicio.equals("S")) {
                 System.out.println("Digite o novo horario de início do evento");
                 String novoHorario = lerStringValida();
                 eventoEncontradoAtualizacao.setHorarioInicio(novoHorario);
@@ -497,7 +504,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o horario de fim do evento? (s/n)");
             editarHorarioFim = lerStringValida();
-            if(editarHorarioFim.equals("s") || editarHorarioFim.equals("S")) {
+            if (editarHorarioFim.equals("s") || editarHorarioFim.equals("S")) {
                 System.out.println("Digite o novo horario de fim do evento");
                 String novoHorario = lerStringValida();
                 eventoEncontradoAtualizacao.setHorarioFim(novoHorario);
@@ -505,7 +512,7 @@ public class Interface {
             }
             System.out.println("Deseja editar o valor do evento? (s/n)");
             editarValor = lerStringValida();
-            if(editarValor.equals("s") || editarValor.equals("S")) {
+            if (editarValor.equals("s") || editarValor.equals("S")) {
                 System.out.println("Digite o novo valor do evento");
                 double novoValor = lerDoubleValido();
                 eventoEncontradoAtualizacao.setValor(novoValor);
@@ -516,11 +523,11 @@ public class Interface {
         }
     }
 
-/*********************
-        Exclusões
- 
-*********************/
-    private static void excluirEstacionamento() throws DescricaoEmBrancoException{
+    /*********************
+     * Exclusões
+     * 
+     *********************/
+    private static void excluirEstacionamento() throws DescricaoEmBrancoException {
         System.out.println("Digite o nome do estacionamento que deseja excluir:");
         String nomeEstacionamento = lerStringValida();
         Estacionamento estacionamentoEncontradoExclusao = encontrarEstacionamento(nomeEstacionamento);
@@ -532,11 +539,36 @@ public class Interface {
         }
     }
 
-    private static void excluirVeiculo() throws DescricaoEmBrancoException{
+    private static void excluirVeiculo() throws DescricaoEmBrancoException {
         System.out.println("Digite a placa do veículo que deseja excluir:");
         String placaVeiculo = lerStringValida();
         Veiculo veiculoEncontradoExclusao = encontrarVeiculo(placaVeiculo);
         if (veiculoEncontradoExclusao != null) {
+            Acesso acesso = null;
+            System.out.println("Digite o tipo de acesso do veículo");
+            System.out.println("1 - Evento");
+            System.out.println("2 - Fracao");
+            System.out.println("3 - Hora");
+            System.out.println("4 - Mensal");
+            System.out.println();
+            int opcao = scanner.nextInt();
+            switch (opcao) {
+            case 1:
+                acesso = new AcessoEvento();
+                break;
+            case 2:
+                acesso = new AcessoFracao();
+                break;
+            case 3:
+                acesso = new AcessoHora();
+                break;
+
+            case 4:
+                acesso = new AcessoMensalista();
+                break;
+            }
+            var valor = acesso.pagar();
+            System.out.println("Valor a ser pago "+valor);
             for (Estacionamento estacionamento : estacionamentos) {
                 estacionamento.getVeiculos().remove(veiculoEncontradoExclusao);
             }
@@ -546,7 +578,7 @@ public class Interface {
         }
     }
 
-    private static void excluirEvento() throws DescricaoEmBrancoException{
+    private static void excluirEvento() throws DescricaoEmBrancoException {
         System.out.println("Digite o nome do evento que deseja excluir:");
         String nomeEvento = lerStringValida();
         Evento eventoEncontradoExclusao = encontrarEvento(nomeEvento);
@@ -558,12 +590,12 @@ public class Interface {
         }
     }
 
-/*********************
-        Auxiliares
-        
-*********************/
+    /*********************
+     * Auxiliares
+     * 
+     *********************/
     private static Estacionamento encontrarEstacionamento(String nomeEstacionamento) {
-    	Estacionamento estacionamentoEncontradoAtualizacao = null;
+        Estacionamento estacionamentoEncontradoAtualizacao = null;
         for (Estacionamento estacionamento : estacionamentos) {
             if (estacionamento.getNome().equals(nomeEstacionamento)) {
                 estacionamentoEncontradoAtualizacao = estacionamento;
@@ -575,7 +607,7 @@ public class Interface {
 
     private static Veiculo encontrarVeiculo(String placaVeiculo) {
         for (Estacionamento estacionamento : estacionamentos) {
-            for (Veiculo veiculo: estacionamento.getVeiculos()){
+            for (Veiculo veiculo : estacionamento.getVeiculos()) {
                 if (veiculo.getPlaca().equals(placaVeiculo)) {
                     return veiculo;
                 }
@@ -585,7 +617,7 @@ public class Interface {
     }
 
     private static Evento encontrarEvento(String nomeEvento) {
-    	Evento eventoEncontradoAtualizacao = null;
+        Evento eventoEncontradoAtualizacao = null;
         for (Evento evento : eventos) {
             if (evento.getNome().equals(nomeEvento)) {
                 eventoEncontradoAtualizacao = evento;
@@ -595,7 +627,7 @@ public class Interface {
         return eventoEncontradoAtualizacao;
     }
 
-    private static boolean eventoExiste(String nomeEvento){
+    private static boolean eventoExiste(String nomeEvento) {
         for (Evento evento : eventos) {
             if (evento.getNome().equals(nomeEvento)) {
                 return true;
@@ -604,27 +636,27 @@ public class Interface {
         return false;
     }
 
-    private static String lerStringValida() throws DescricaoEmBrancoException{
+    private static String lerStringValida() throws DescricaoEmBrancoException {
         String entrada = scanner.nextLine();
-        if(entrada == null || entrada.trim().isEmpty()){
+        if (entrada == null || entrada.trim().isEmpty()) {
             throw new DescricaoEmBrancoException();
         }
         return entrada;
     }
 
-    private static Double lerDoubleValido() throws ValorAcessoInvalidoException{
+    private static Double lerDoubleValido() throws ValorAcessoInvalidoException {
         Double entrada = scanner.nextDouble();
         scanner.nextLine();
-        if(entrada<=0){
+        if (entrada <= 0) {
             throw new ValorAcessoInvalidoException();
         }
         return entrada;
     }
 
-    private static int lerInteiroValido() throws ValorAcessoInvalidoException{
+    private static int lerInteiroValido() throws ValorAcessoInvalidoException {
         int entrada = scanner.nextInt();
         scanner.nextLine();
-        if(entrada<=0){
+        if (entrada <= 0) {
             throw new ValorAcessoInvalidoException();
         }
         return entrada;
