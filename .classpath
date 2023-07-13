@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="entrega2"/>
+	<classpathentry kind="src" path="entrega3/view"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
